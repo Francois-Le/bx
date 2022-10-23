@@ -1,9 +1,12 @@
 function bx_include()
     local baseFolder = debug.getinfo(1,'S').source:match("^@(.+)/buildSystem/build.lua$")
     includedirs { path.join(baseFolder, "include") }
+    
+    defines "BX_CONFIG_DEBUG=1"
 
     filter "action:vs*"
         includedirs { path.join(baseFolder, "include/compat/msvc") }
+        buildoptions { "/Zc:__cplusplus" }
     filter { "system:windows", "action:gmake" }
         includedirs { path.join(baseFolder, "include/compat/mingw") }
     filter { "system:macosx" }
