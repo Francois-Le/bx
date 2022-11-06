@@ -16,7 +16,8 @@ function bx_include()
     --links { "bx" }
 end
 
-function bx_project()
+function bx_project(options)
+    options = options or {}
     local baseFolder = debug.getinfo(1,'S').source:match("^@(.+)/buildSystem/build.lua$")
 
     project "bx"
@@ -47,5 +48,9 @@ function bx_project()
 
         filter "action:vs*"
             defines "_CRT_SECURE_NO_WARNINGS"
+
+        if options.dependson then
+            dependson { options.dependson }
+        end
 
 end
